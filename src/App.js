@@ -9,6 +9,7 @@ import {
 import { Navbar } from './app/Navbar'
 import { AddPostForm } from './features/posts/AddPostForm'
 import { PostsList } from './features/posts/PostsList'
+import { SinglePostPage } from './features/posts/SinglePostPage'
 
 function App() {
   return (
@@ -26,6 +27,11 @@ function App() {
               </>
             ) }
           />
+          <Route
+            exact
+            path="/posts/:postId"
+            component={ SinglePostPage }
+          />
           <Redirect to="/" />
         </Switch>
       </div>
@@ -34,3 +40,9 @@ function App() {
 }
 
 export default App
+
+//===How to add new feature:===
+// 1.adding slices of state,
+// 2.writing reducer functions,
+// 3.dispatching actions,
+// 4.rendering the UI based on data from the Redux store (useSelector)
