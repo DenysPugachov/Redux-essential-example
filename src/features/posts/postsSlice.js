@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, nanoid } from "@reduxjs/toolkit"
 
 const initialState = [
   { id: "1", title: "First Post!", content: "Hello!" },
@@ -9,8 +9,20 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    postAdded: (state, action) => {
-      state.push(action.payload)
+    postAdded: {
+      reducer(state, action) {
+        state.push(action.payload)
+      },
+      // "prepare callback" function can take multiple arguments, generate random values like unique IDs, and run whatever other synchronous logic is needed to decide what values go into the action object. It should then return an object with the payload field inside.
+      prepare(title, content) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            content
+          }
+        }
+      }
     },
     postUpdated: (state, action) => {
       const { id, title, content } = action.payload
