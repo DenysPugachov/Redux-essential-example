@@ -3,19 +3,39 @@ import { sub } from "date-fns"
 
 
 const initialState = [
-  { id: "1", title: "First Post!", content: "Hello!", date: sub(new Date(), { minutes: 10 }).toISOString() },
-  { id: "2", title: "Second Post!", content: "More Text", date: sub(new Date(), { minutes: 5 }).toISOString() },
+  {
+    id: "1",
+    title: "First Post!",
+    content: "Hello!",
+    date: sub(new Date(), { minutes: 10 }).toISOString(),
+    reactions: { thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0 }
+  },
+  {
+    id: "2",
+    title: "Second Post!",
+    content: "More Text",
+    date: sub(new Date(), { minutes: 5 }).toISOString(),
+    reactions: { thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0 }
+  },
 ]
 
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
+    reactionAdded(state, action) {
+      const { postId, reactionName } = action.payload
+      const existingPost = state.find(post => post.id === postId)
+      if (existingPost) {
+        existingPost.reactions[reactionName]++
+      }
+    },
     postAdded: {
       reducer(state, action) {
         state.push(action.payload)
       },
-      // "prepare callback" function can take multiple arguments, generate random values like unique IDs, and run whatever other synchronous logic is needed to decide what values go into the action object. It should then return an object with the payload field inside.
+      // prepare callback" returns the action payload
+      // random values should be put in the action, not calculated in the reducer
       prepare(title, content, userId) {
         return {
           payload: {
@@ -24,6 +44,7 @@ const postsSlice = createSlice({
             title,
             content,
             user: userId,
+            reactions: { thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0 }
           }
         }
       }
@@ -39,6 +60,6 @@ const postsSlice = createSlice({
   }
 })
 
-export const { postAdded, postUpdated } = postsSlice.actions
+export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
 
 export default postsSlice.reducer

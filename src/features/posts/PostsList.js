@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { PostAuthor } from './PostAuthor'
+import { ReactionButtons } from './ReactionsButtons'
 import { TimeAgo } from './TimeAgo'
 
 export const PostsList = () => {
@@ -11,7 +12,7 @@ export const PostsList = () => {
   const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
 
   const renderPosts = orderedPosts.map(post => (
-    <article className="post-excerpt" key={ post.id }>
+    <article className="post-excerpt" key={ post.id } >
       <h3>{ post.title }</h3>
       <p className="post-content">{ post.content.substring(0, 100) }</p>
       <Link
@@ -22,7 +23,8 @@ export const PostsList = () => {
       <hr />
       <PostAuthor userId={ post.user } />
       <TimeAgo timestamp={ post.date } />
-    </article >
+      <ReactionButtons post={ post } />
+    </article>
   ))
 
   return (
