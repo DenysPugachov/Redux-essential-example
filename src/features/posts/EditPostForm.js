@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom"
 import { postUpdated } from "./postsSlice"
 
 export const EditPostForm = ({ match }) => {
+  console.log(match);
   const { postId } = match.params
 
   const post = useSelector(state => state.posts.find(post => post.id === postId))
@@ -14,6 +15,7 @@ export const EditPostForm = ({ match }) => {
 
   const dispatch = useDispatch()
   const history = useHistory()
+  console.log(history);
 
   const onTitleChanged = e => setTitle(e.target.value)
   const onContentChanged = e => setContent(e.target.value)
