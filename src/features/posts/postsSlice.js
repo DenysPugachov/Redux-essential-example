@@ -14,12 +14,13 @@ const postsSlice = createSlice({
         state.push(action.payload)
       },
       // "prepare callback" function can take multiple arguments, generate random values like unique IDs, and run whatever other synchronous logic is needed to decide what values go into the action object. It should then return an object with the payload field inside.
-      prepare(title, content) {
+      prepare(title, content, userId) {
         return {
           payload: {
             id: nanoid(),
             title,
-            content
+            content,
+            user: userId,
           }
         }
       }
