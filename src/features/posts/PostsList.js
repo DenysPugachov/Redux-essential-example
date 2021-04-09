@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { PostAuthor } from './PostAuthor'
 import { ReactionButtons } from './ReactionsButtons'
 import { TimeAgo } from './TimeAgo'
+import { selectAllPosts } from "./postsSlice"
 
 export const PostsList = () => {
-  const posts = useSelector(state => state.posts)
+  const posts = useSelector(selectAllPosts)
 
   //Sort posts in reverse chronological order by date time string
   const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
